@@ -15,6 +15,7 @@ RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing/' >>/etc/apk/reposit
       ruby \
       ruby-dev \
       ruby-json \
+      sigar \
     && echo 'gem: --no-document' >>/root/.gemrc \
     && echo 'gem: --no-document' >>/etc/gemrc \
     && gem install chef --no-document \
