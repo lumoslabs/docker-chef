@@ -4,8 +4,7 @@ MAINTAINER Lumos Labs <ops@lumoslabs.com>
 ENV LANGUAGE=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8
-RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing/' >>/etc/apk/repositories \
-    && apk add --purge --update \
+RUN apk add --purge --update \
       alpine-sdk \
       bash \
       ca-certificates \
