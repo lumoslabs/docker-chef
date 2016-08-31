@@ -16,7 +16,7 @@ RUN apk add --purge --update \
       ruby-nokogiri \
     && echo 'gem: --no-document' >>/root/.gemrc \
     && echo 'gem: --no-document' >>/etc/gemrc \
-    && gem install chef mixlib-shellout --no-document \
+    && gem install chef mixlib-shellout chef-sugar --no-document \
     && gem install aws-sdk fog --no-document \
     && adduser -u 500 core -D \
     && apk del --purge alpine-sdk \
