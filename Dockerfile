@@ -17,7 +17,7 @@ RUN apk add --purge --update \
     && echo 'gem: --no-document' >>/root/.gemrc \
     && echo 'gem: --no-document' >>/etc/gemrc \
     && gem install chef mixlib-shellout chef-sugar --no-document \
-    && gem install aws-sdk fog --no-document \
+    && gem install aws-sdk fog fog-aws --no-document \
     && adduser -u 500 core -D \
     && apk del --purge alpine-sdk \
     && rm -rvf /var/cache/apk/*
