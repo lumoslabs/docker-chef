@@ -1,11 +1,6 @@
 #!/bin/bash
-exec -e
-ln -svf /data/hostfs/etc/passwd /etc/passwd
-ln -svf /data/hostfs/etc/shadow /etc/shadow
-ln -svf /data/hostfs/etc/group /etc/group
-ln -svf /data/hostfs/etc/gshadow /etc/gshadow
-
+: ${CHEF_ENV:=_default}
 exec chef-client --config /etc/chef/client.rb \
-  --log_level="${CHEF_LOGLEVEL}" --no-fork \
+  --log_level="${CHEF_LOGLEVEL}" \
   --environment="${CHEF_ENV}" --runlist="${CHEF_RUNLIST}" \
   "$@"

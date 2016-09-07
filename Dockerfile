@@ -1,11 +1,13 @@
 FROM alpine:3.3
 MAINTAINER Lumos Labs <ops@lumoslabs.com>
 
-ENTRYPOINT ["/sbin/tini", "-g", "--"]
-ENV LANGUAGE=en_US.UTF-8 \
+ENTRYPOINT ["/sbin/tini", "-g", "--", "/sbin/entry"]
+ENV CHEF_LOGLEVEL=info \
+    ETC_LINKS="passwd shadow group gshadow" \
+    LANGUAGE=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
-    CHEF_LOGLEVEL=info \
+    SBIN_LINKS="useradd groupadd" \
     TINI_VERSION=v0.10.0
 RUN apk add --purge --update \
       alpine-sdk \
@@ -25,6 +27,6 @@ RUN apk add --purge --update \
     && apk del --purge alpine-sdk \
     && rm -rvf /var/cache/apk/*
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /sbin/tini
-ADD runchef /sbin/runchef
-RUN chmod +x /sbin/tini /sbin/runchef
+ADD ["entry", "runchef", "/sbin/"]
+RUN chmod +x /sbin/tini /sbin/runchef /sbin/entry
 CMD ["/sbin/runchef"]
