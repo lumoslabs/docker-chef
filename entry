@@ -1,13 +1,8 @@
 #!/bin/bash
 set -e
 : ${ETC_LINKS:="passwd shadow group gshadow"}
-: ${SBIN_LINKS:="useradd groupadd"}
 for f in $ETC_LINKS; do
   test -f /data/hostfs/etc/${f} && \
     ln -svf /data/hostfs/etc/${f} /etc/${f}
-done
-for b in $SBIN_LINKS; do
-  test -x /data/hostfs/usr/sbin/${b} && \
-    ln -svf /data/hostfs/usr/sbin/${b} /usr/sbin/${b}
 done
 exec "$@"

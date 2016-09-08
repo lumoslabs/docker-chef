@@ -7,7 +7,6 @@ ENV CHEF_LOGLEVEL=info \
     LANGUAGE=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
-    SBIN_LINKS="useradd groupadd" \
     TINI_VERSION=v0.10.0
 RUN apk add --purge --update \
       alpine-sdk \
