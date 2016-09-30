@@ -26,6 +26,6 @@ RUN apk add --purge --update \
     && apk del --purge alpine-sdk \
     && rm -rvf /var/cache/apk/*
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static /sbin/tini
-ADD ["entry", "runchef", "/sbin/"]
+COPY ["entry", "runchef", "/sbin/"]
 RUN chmod 0755 /sbin/tini /sbin/runchef /sbin/entry
 CMD ["/sbin/runchef"]

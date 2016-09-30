@@ -1,5 +1,7 @@
 #!/bin/bash
 : ${CHEF_ENV:=_default}
+updateca="$(which update-ca-certificates)"
+test -x "${updateca}" && "${updateca}"
 exec chef-client --config /etc/chef/client.rb \
   --log_level="${CHEF_LOGLEVEL}" \
   --environment="${CHEF_ENV}" --runlist="${CHEF_RUNLIST}" \
