@@ -16,10 +16,10 @@ RUN apk add --purge --update \
       openssh \
     && echo 'gem: --no-document' >>/root/.gemrc \
     && echo 'gem: --no-document' >>/etc/gemrc \
-    && gem install chef mixlib-shellout chef-sugar --no-document \
-    && gem install aws-sdk fog fog-aws --no-document \
     && adduser -u 500 core -D \
     && rm -rvf /var/cache/apk/*
+COPY Gemfile* /
+RUN bundle install --system --retry=2 --jobs=$(nproc)
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static /sbin/tini
 COPY ["entry", "runchef", "/sbin/"]
 RUN chmod 0755 /sbin/tini /sbin/runchef /sbin/entry
