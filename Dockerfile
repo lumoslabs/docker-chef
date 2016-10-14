@@ -12,6 +12,7 @@ RUN apk add --purge --update \
       bash \
       build-base \
       ca-certificates \
+      jq \
       libffi-dev \
       openssh \
     && echo 'gem: --no-document' >>/root/.gemrc \

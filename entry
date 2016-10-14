@@ -5,4 +5,8 @@ for f in $ETC_LINKS; do
   test -f /data/hostfs/etc/${f} && \
     ln -svf /data/hostfs/etc/${f} /etc/${f}
 done
+if ! grep -q root /etc/group; then
+  addgroup -S -g 0 root
+  adduser root root
+fi
 exec "$@"
