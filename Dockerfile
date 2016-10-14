@@ -19,7 +19,9 @@ RUN apk add --purge --update \
     && adduser -u 500 core -D \
     && rm -rvf /var/cache/apk/*
 COPY Gemfile* /
-RUN bundle install --system --retry=2 --jobs=$(nproc)
+RUN NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
+    && echo NPROC=${NPROC} \
+    && bundle install --system --retry=2 --jobs=${NPROC}
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static /sbin/tini
 COPY ["entry", "runchef", "/sbin/"]
 RUN chmod 0755 /sbin/tini /sbin/runchef /sbin/entry
