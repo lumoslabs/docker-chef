@@ -2,6 +2,10 @@
 set -x
 : ${CHEF_ENV:=_default}
 unset environment runlist loglevel
+if grep -q root /etc/group; then
+  addgroup -S -g 0 root
+  adduser root root
+fi
 if test -n "${UPDATE_CA}"; then
   updateca="$(which update-ca-certificates)"
   test -x "${updateca}" && "${updateca}"
