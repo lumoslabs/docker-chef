@@ -1,10 +1,12 @@
 #!/bin/bash
+set -x
 : ${CHEF_ENV:=_default}
+unset environment runlist loglevel
 if test -n "${UPDATE_CA}"; then
   updateca="$(which update-ca-certificates)"
   test -x "${updateca}" && "${updateca}"
 fi
-exec chef-client --config /etc/chef/client.rb \
-  --log_level="${CHEF_LOGLEVEL}" \
-  --environment="${CHEF_ENV}" --runlist="${CHEF_RUNLIST}" \
-  "$@"
+test -n "${CHEF_LOGLEVEL}" && loglevel="--log_level=${CHEF_LOGLEVEL}"
+test -n "${CHEF_ENV}" && environment="--environment=${CHEF_ENV}"
+test -n "${CHEF_RUNLIST}" && runlist="--runlist=${CHEF_RUNLIST}"
+exec chef-client --config /etc/chef/client.rb "${loglevel}" "${environment}" "${runlist}" "$@"
