@@ -9,8 +9,8 @@ if test -n "${UPDATE_CA}"; then
   updateca="$(which update-ca-certificates)"
   test -x "${updateca}" && "${updateca}"
 fi
-test -n "${CHEF_LOGLEVEL}" && loglevel="--log_level=${CHEF_LOGLEVEL}"
-test -n "${CHEF_ENVIRONMENT}" && environment="--environment=${CHEF_ENVIRONMENT}"
-test -n "${CHEF_RUNLIST}" && runlist="--runlist=${CHEF_RUNLIST}"
-[[ "${CHEF_RUNLIST}" == "none" ]] && runlist="--runlist="
-exec chef-client --config /etc/chef/client.rb "${loglevel}" "${environment}" "${runlist}" "$@"
+options="--config=/etc/chef/client.rb $@"
+test -n "${CHEF_LOGLEVEL}" && options="${options} --log_level=${CHEF_LOGLEVEL}"
+test -n "${CHEF_ENVIRONMENT}" && options="${options} --environment=${CHEF_ENVIRONMENT}"
+test -n "${CHEF_RUNLIST}" && options="${options} --runlist=${CHEF_RUNLIST}"
+exec chef-client ${options}

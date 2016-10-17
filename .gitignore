@@ -1,3 +1,4 @@
 *.DS*
 .ruby*
 .bundle*
+.chef*
