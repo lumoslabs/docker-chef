@@ -3,11 +3,11 @@ MAINTAINER Lumos Labs <ops@lumoslabs.com>
 
 ENTRYPOINT ["/sbin/tini", "-g", "--", "/sbin/entry"]
 ENV CHEF_LOGLEVEL=info \
-    ETC_LINKS="passwd shadow group gshadow" \
     LANGUAGE=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
-    TINI_VERSION=v0.10.0
+    TINI_VERSION=v0.10.0 \
+    TZ=UTC
 RUN apk add --purge --update \
       bash \
       build-base \

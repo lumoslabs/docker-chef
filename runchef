@@ -1,6 +1,5 @@
 #!/bin/bash
 set -x
-: ${CHEF_ENV:=_default}
 unset environment runlist loglevel
 if grep -q root /etc/group; then
   addgroup -S -g 0 root
@@ -11,6 +10,7 @@ if test -n "${UPDATE_CA}"; then
   test -x "${updateca}" && "${updateca}"
 fi
 test -n "${CHEF_LOGLEVEL}" && loglevel="--log_level=${CHEF_LOGLEVEL}"
-test -n "${CHEF_ENV}" && environment="--environment=${CHEF_ENV}"
+test -n "${CHEF_ENVIRONMENT}" && environment="--environment=${CHEF_ENVIRONMENT}"
 test -n "${CHEF_RUNLIST}" && runlist="--runlist=${CHEF_RUNLIST}"
+[[ "${CHEF_RUNLIST}" == "none" ]] && runlist="--runlist=''"
 exec chef-client --config /etc/chef/client.rb "${loglevel}" "${environment}" "${runlist}" "$@"
