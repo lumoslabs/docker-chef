@@ -1,6 +1,5 @@
 #!/bin/bash
 set -x
-unset environment runlist loglevel
 if grep -q root /etc/group; then
   addgroup -S -g 0 root
   adduser root root
@@ -9,8 +8,7 @@ if test -n "${UPDATE_CA}"; then
   updateca="$(which update-ca-certificates)"
   test -x "${updateca}" && "${updateca}"
 fi
-options="--config=/etc/chef/client.rb $@"
-test -n "${CHEF_LOGLEVEL}" && options="${options} --log_level=${CHEF_LOGLEVEL}"
-test -n "${CHEF_ENVIRONMENT}" && options="${options} --environment=${CHEF_ENVIRONMENT}"
-test -n "${CHEF_RUNLIST}" && options="${options} --runlist=${CHEF_RUNLIST}"
-exec chef-client ${options}
+exec chef-client "$@" \
+  ${CHEF_LOGLEVEL:+--log_level=${CHEF_LOGLEVEL}} \
+  ${CHEF_ENVIRONMENT:+--environment=${CHEF_ENVIRONMENT}} \
+  ${CHEF_RUNLIST:+--runlist=${CHEF_RUNLIST}}
