@@ -1,9 +1,8 @@
 FROM ruby:2.3-alpine
 MAINTAINER Lumos Labs <ops@lumoslabs.com>
 
-ENTRYPOINT ["/sbin/tini", "-g", "--", "/sbin/entry"]
-ENV CHEF_LOGLEVEL=info \
-    LANGUAGE=en_US.UTF-8 \
+ENTRYPOINT ["/sbin/tini", "-g", "--", "chef-client"]
+ENV LANGUAGE=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
     TINI_VERSION=v0.10.0 \
@@ -24,6 +23,3 @@ RUN NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
     && echo NPROC=${NPROC} \
     && bundle install --system --retry=2 --jobs=${NPROC}
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static /sbin/tini
-COPY ["entry", "runchef", "/sbin/"]
-RUN chmod 0755 /sbin/tini /sbin/runchef /sbin/entry
-CMD ["/sbin/runchef"]
