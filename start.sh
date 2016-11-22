@@ -1,3 +1,4 @@
 #!/bin/bash
 [ -n "${_DEBUG}" ] && set -x
-eval exec "$*"
+cmd=$1 ; shift
+exec $cmd "$@"
