@@ -1,7 +1,15 @@
-#!/bin/bash
+#!/bin/sh
 test -n "${_DEBUG}" && set -x
-for d in /opt/host/{bin,sbin} /opt/host/local/{bin,sbin} /var/host/{bin,sbin} /var/host/local/{bin,sbin}; do
-  test -d "${d}" && export PATH=${PATH}:${d}
+dirs=(
+  /mnt/root/usr/local/bin
+  /mnt/root/usr/local/sbin
+  /mnt/root/usr/bin
+  /mnt/root/bin
+  /mnt/root/usr/sbin
+  /mnt/root/sbin
+)
+for d in "${dirs[@]}"; do
+  test -d "$d" && export PATH=$d:${PATH}
 done
 cmd=$1 ; shift
 exec "$cmd" "$@"
